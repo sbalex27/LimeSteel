@@ -8,8 +8,7 @@ namespace UnitTest
 	TEST_CLASS(UnitTest)
 	{
 	public:
-		
-		TEST_METHOD(TestMethod1)
+		TEST_METHOD(AssertOkTest)
 		{
 			// Arrange
 			auto expected = "Hello World!\n";
