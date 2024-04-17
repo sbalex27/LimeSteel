@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\Structs">
+      <UniqueIdentifier>{0a08f733-0af9-4be4-8752-7f1dfe8887d4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="LimeSteel.cpp">
@@ -21,9 +24,24 @@
     <ClCompile Include="DirectoryService.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Table.h">
+      <Filter>Header Files\Structs</Filter>
+    </ClCompile>
+    <ClCompile Include="CsvDriver.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GuidFactory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DirectoryService.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CsvDriver.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GuidFactory.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

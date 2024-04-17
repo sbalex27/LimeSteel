@@ -6,12 +6,12 @@
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
-// Path to the directory where the tests will be executed, USE WITH CAUTION
-constexpr auto TESTS_PATH = "C:\\Users\\alex2\\LimeSteel\\Tests";
-
 using std::string;
 using std::wstring;
 using std::system;
+
+// Path to the directory where the tests will be executed, USE WITH CAUTION
+constexpr auto TESTS_PATH = "C:\\Users\\alex2\\LimeSteel\\Tests";
 
 namespace UnitTest
 {
@@ -23,6 +23,7 @@ namespace UnitTest
 
 		TEST_METHOD_INITIALIZE(Setup)
 		{
+			system(("rmdir /s /q " + string(TESTS_PATH)).c_str());
 			this->manager = new DirectoryService(TESTS_PATH);
 		}
 
@@ -95,6 +96,21 @@ namespace UnitTest
 			// Assert
 			auto isOpen = file.is_open();
 			wstring errorMessage = L"File was not created in " + wstring(manager->path.begin(), manager->path.end());
+			Assert::IsTrue(isOpen, errorMessage.c_str());
+		}
+
+		TEST_METHOD(OpenFile)
+		{
+			// Arrange
+			system(("mkdir " + string(TESTS_PATH)).c_str());
+			system(("echo. 2> " + string(TESTS_PATH) + "\\test.csv").c_str());
+
+			// Act
+			auto file = manager->open_file("test.csv");
+
+			// Assert
+			auto isOpen = file.is_open();
+			wstring errorMessage = L"File was not opened in " + wstring(manager->path.begin(), manager->path.end());
 			Assert::IsTrue(isOpen, errorMessage.c_str());
 		}
 

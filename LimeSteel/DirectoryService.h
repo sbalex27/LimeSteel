@@ -8,10 +8,10 @@ constexpr auto PROGRAM_BASE_PATH = "C:\\Users\\alex2\\LimeSteel\\Data";
 using std::string;
 using std::ifstream;
 using std::ofstream;
+using std::fstream;
 
 class DirectoryService
 {
-private:
 public:
 	string path;
 	DirectoryService(string path);
@@ -52,5 +52,12 @@ public:
 	/// <param name="filename">Nombre del archivo</param>
 	/// <returns>Verdadero si fue borrado exitosamente</returns>
 	bool drop_file(string filename) const;
+
+	/// <summary>
+	/// Abre el archivo con el nombre dado en la ruta con la que la instancia fue creada
+	/// </summary>
+	/// <param name="filename">Nombre del archivo</param>
+	/// <returns>Archivo existente que se ha abierto</returns>
+	fstream open_file(string filename) const;
 };
 

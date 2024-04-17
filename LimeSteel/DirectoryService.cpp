@@ -1,10 +1,12 @@
 #include "DirectoryService.h"
+#include <fstream>
 
 using std::string;
 using std::system;
 using std::iostream;
 using std::ifstream;
 using std::ofstream;
+using std::fstream;
 
 DirectoryService::DirectoryService(string path)
 {
@@ -61,4 +63,11 @@ bool DirectoryService::drop_file(string filename) const
 	auto path = this->path + "\\" + filename;
 	auto result = remove(path.c_str());
 	return result == 0;
+}
+
+fstream DirectoryService::open_file(string filename) const
+{
+	fstream file;
+	file.open(path + "\\" + filename, std::ios::in | std::ios::out);
+	return file;
 }
