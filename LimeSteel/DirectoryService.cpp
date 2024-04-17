@@ -1,4 +1,4 @@
-#include "CsvManager.h"
+#include "DirectoryService.h"
 
 using std::string;
 using std::system;
@@ -6,26 +6,26 @@ using std::iostream;
 using std::ifstream;
 using std::ofstream;
 
-CsvManager::CsvManager(string path)
+DirectoryService::DirectoryService(string path)
 {
 	this->path = path;
 }
 
-bool CsvManager::create_directory() const
+bool DirectoryService::create_directory() const
 {
 	string command = "mkdir " + string(path);
 	auto result = system(command.c_str());
 	return result == 0;
 }
 
-bool CsvManager::drop_directory() const
+bool DirectoryService::drop_directory() const
 {
 	string command = "rmdir /s /q " + string(path);
 	auto result = system(command.c_str());
 	return result == 0;
 }
 
-bool CsvManager::exists_directory() const
+bool DirectoryService::exists_directory() const
 {
 	struct stat sb;
 
@@ -35,12 +35,12 @@ bool CsvManager::exists_directory() const
 		return false;
 }
 
-ofstream CsvManager::create_file(string filename) const
+ofstream DirectoryService::create_file(string filename) const
 {
 	return ofstream(path + "\\" + filename);
 }
 
-bool CsvManager::exists_file(string filename) const
+bool DirectoryService::exists_file(string filename) const
 {
 	auto path = this->path + "\\" + filename;
 	ifstream file;
@@ -56,7 +56,7 @@ bool CsvManager::exists_file(string filename) const
 	}
 }
 
-bool CsvManager::drop_file(string filename) const
+bool DirectoryService::drop_file(string filename) const
 {
 	auto path = this->path + "\\" + filename;
 	auto result = remove(path.c_str());

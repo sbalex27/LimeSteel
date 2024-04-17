@@ -9,12 +9,12 @@ using std::string;
 using std::ifstream;
 using std::ofstream;
 
-class CsvManager
+class DirectoryService
 {
 private:
 public:
 	string path;
-	CsvManager(string path);
+	DirectoryService(string path);
 	/// <summary>
 	/// Crea un directorio en la ruta con la que la instancia fue creada
 	/// </summary>

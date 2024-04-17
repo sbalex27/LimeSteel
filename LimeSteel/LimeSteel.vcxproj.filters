@@ -18,12 +18,12 @@
     <ClCompile Include="LimeSteel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CsvManager.cpp">
+    <ClCompile Include="DirectoryService.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CsvManager.h">
+    <ClInclude Include="DirectoryService.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

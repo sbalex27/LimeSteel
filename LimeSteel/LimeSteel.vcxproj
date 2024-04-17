@@ -127,11 +127,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="CsvManager.cpp" />
+    <ClCompile Include="DirectoryService.cpp" />
     <ClCompile Include="LimeSteel.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CsvManager.h" />
+    <ClInclude Include="DirectoryService.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

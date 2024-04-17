@@ -1,8 +1,8 @@
 #include "pch.h"
 #include "CppUnitTest.h"
 #include <filesystem>
-#include "../LimeSteel/CsvManager.h"
-#include "../LimeSteel/CsvManager.cpp"
+#include "../LimeSteel/DirectoryService.h"
+#include "../LimeSteel/DirectoryService.cpp"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
@@ -19,11 +19,11 @@ namespace UnitTest
 	{
 	public:
 
-		CsvManager* manager = nullptr;
+		DirectoryService* manager = nullptr;
 
 		TEST_METHOD_INITIALIZE(Setup)
 		{
-			this->manager = new CsvManager(TESTS_PATH);
+			this->manager = new DirectoryService(TESTS_PATH);
 		}
 
 		TEST_METHOD_CLEANUP(Teardown)
