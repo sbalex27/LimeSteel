@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34616.47
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LimeSteel", "LimeSteel\LimeSteel.vcxproj", "{69A066CE-BBF4-4BC7-B9F3-F2CAB1A41743}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{69A066CE-BBF4-4BC7-B9F3-F2CAB1A41743}.Debug|x64.ActiveCfg = Debug|x64
+		{69A066CE-BBF4-4BC7-B9F3-F2CAB1A41743}.Debug|x64.Build.0 = Debug|x64
+		{69A066CE-BBF4-4BC7-B9F3-F2CAB1A41743}.Debug|x86.ActiveCfg = Debug|Win32
+		{69A066CE-BBF4-4BC7-B9F3-F2CAB1A41743}.Debug|x86.Build.0 = Debug|Win32
+		{69A066CE-BBF4-4BC7-B9F3-F2CAB1A41743}.Release|x64.ActiveCfg = Release|x64
+		{69A066CE-BBF4-4BC7-B9F3-F2CAB1A41743}.Release|x64.Build.0 = Release|x64
+		{69A066CE-BBF4-4BC7-B9F3-F2CAB1A41743}.Release|x86.ActiveCfg = Release|Win32
+		{69A066CE-BBF4-4BC7-B9F3-F2CAB1A41743}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9EB149A1-C3E3-4FB0-BC7F-A9B7B7528211}
+	EndGlobalSection
+EndGlobal
