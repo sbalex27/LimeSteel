@@ -5,6 +5,8 @@ VisualStudioVersion = 17.9.34616.47
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LimeSteel", "LimeSteel\LimeSteel.vcxproj", "{69A066CE-BBF4-4BC7-B9F3-F2CAB1A41743}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "UnitTest", "UnitTest\UnitTest.vcxproj", "{632C8FAD-C812-4575-9F5C-B7764A941C62}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -21,6 +23,14 @@ Global
 		{69A066CE-BBF4-4BC7-B9F3-F2CAB1A41743}.Release|x64.Build.0 = Release|x64
 		{69A066CE-BBF4-4BC7-B9F3-F2CAB1A41743}.Release|x86.ActiveCfg = Release|Win32
 		{69A066CE-BBF4-4BC7-B9F3-F2CAB1A41743}.Release|x86.Build.0 = Release|Win32
+		{632C8FAD-C812-4575-9F5C-B7764A941C62}.Debug|x64.ActiveCfg = Debug|x64
+		{632C8FAD-C812-4575-9F5C-B7764A941C62}.Debug|x64.Build.0 = Debug|x64
+		{632C8FAD-C812-4575-9F5C-B7764A941C62}.Debug|x86.ActiveCfg = Debug|Win32
+		{632C8FAD-C812-4575-9F5C-B7764A941C62}.Debug|x86.Build.0 = Debug|Win32
+		{632C8FAD-C812-4575-9F5C-B7764A941C62}.Release|x64.ActiveCfg = Release|x64
+		{632C8FAD-C812-4575-9F5C-B7764A941C62}.Release|x64.Build.0 = Release|x64
+		{632C8FAD-C812-4575-9F5C-B7764A941C62}.Release|x86.ActiveCfg = Release|Win32
+		{632C8FAD-C812-4575-9F5C-B7764A941C62}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
