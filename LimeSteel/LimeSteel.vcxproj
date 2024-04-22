@@ -128,6 +128,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="CsvDriver.cpp" />
+    <ClCompile Include="DataSeeder.cpp" />
     <ClCompile Include="DirectoryService.cpp" />
     <ClCompile Include="GuidFactory.cpp" />
     <ClCompile Include="LimeSteel.cpp" />
@@ -135,6 +136,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CsvDriver.h" />
+    <ClInclude Include="DataSeeder.h" />
     <ClInclude Include="DirectoryService.h" />
     <ClInclude Include="GuidFactory.h" />
   </ItemGroup>

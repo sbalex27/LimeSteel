@@ -4,6 +4,5 @@
 using std::vector;
 using std::string;
 
-typedef string Cell;
-typedef vector<Cell> Row;
+typedef vector<string> Row;
 typedef vector<Row> Table;

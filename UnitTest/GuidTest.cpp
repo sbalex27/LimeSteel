@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "CppUnitTest.h"
-#include "../LimeSteel/GuidFactory.h";
-#include "../LimeSteel/GuidFactory.cpp";
+#include "../LimeSteel/GuidFactory.h"
+#include "../LimeSteel/GuidFactory.cpp"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 

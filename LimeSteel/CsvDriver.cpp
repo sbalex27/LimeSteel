@@ -1,9 +1,10 @@
 #include "CsvDriver.h"
 #include "DirectoryService.h"
 #include "Table.h"
-#include "iostream";
-#include "fstream";
-#include "string";
+#include "iostream"
+#include "fstream"
+#include "string"
+#include <sstream>
 
 using std::ofstream;
 using std::fstream;
@@ -16,52 +17,82 @@ CsvDriver::CsvDriver(DirectoryService* directory, GuidFactory* guidFactory)
 	this->guidFactory = guidFactory;
 }
 
-Table CsvDriver::Select(string filename)
+Row CsvDriver::cast_line_to_row(string line)
 {
-	fstream file = directory->open_file(filename);
-
 	Row row;
-	Table table;
-	Cell cell;
+	string token;
 
-	string line;
-	while (getline(file, filename))
-	{
-		row.clear();
-		while (getline(file, cell, ',')) // Delimitador de CSV
-		{
-			row.push_back(cell); // Agrega la celda a la fila
-		}
-		table.push_back(row); // Agrega la fila a la tabla
+	std::istringstream tokenStream(line);
+	while (getline(tokenStream, token, ',')) {
+		row.push_back(token);
 	}
 
-	return table;
-}
-
-Row CsvDriver::Insert(string filename, Row row)
-{
-	fstream file = directory->open_file(filename);
-
-	if (guidFactory->is_not_guid(row[0])) {
-		row.insert(row.begin(), guidFactory->create());
-	}
-
-	for (auto& cell : row) {
-		file << cell << ",";
-	}
-	file.close();
-	
 	return row;
 }
 
-void CsvDriver::Update(string filename, Guid guid, Row row)
+string CsvDriver::cast_row_to_line(Row row)
 {
-	fstream file = directory->open_file(filename);
+	string line;
+	for (auto& cell : row) {
+		line += cell + ",";
+	}
+	line.pop_back(); // Elimina la ultima coma
+
+	return line;
+}
+
+Table CsvDriver::select(string filename)
+{
+	auto file = this->directory->open_read_file(filename);
+
+	Table table;
+	string line;
+
+	while (getline(file, line))
+	{
+		Row row = cast_line_to_row(line);
+		table.push_back(row);
+	}
+
+	file.close();
+	return table;
+}
+
+Row CsvDriver::insert(string filename, Row row)
+{
+	if (this->directory->exists_file(filename) == false) {
+		ofstream outputFile = this->directory->create_file(filename);
+		outputFile.close();
+	}
+
+	auto outputFile = this->directory->open_write_to_file(filename);
+
+	if (!outputFile.is_open()) {
+		throw "No se pudo abrir el archivo";
+	}
+	row.insert(row.begin(), guidFactory->create());
+
+	string parsedFile;
+	for (auto& cell : row) {
+		parsedFile += cell + ",";
+	}
+	parsedFile.pop_back(); // Elimina la ultima coma
+
+	outputFile << parsedFile.c_str() << std::endl;
+	outputFile.close();
+
+	return row;
+}
+
+void CsvDriver::update(string filename, Guid guid, Row row)
+{
+	auto file = this->directory->open_modify_file(filename);
 
 	string line;
-	while (getline(file, filename))
+	while (getline(file, line))
 	{
-		if (line.find(guid) != string::npos) // Si contiene el guid
+		Row row = cast_line_to_row(line);
+		if (row[0] == guid) // Si contiene el guid
 		{
 			for (int i = 0; i < row.size(); i++)
 			{

@@ -39,7 +39,15 @@ bool DirectoryService::exists_directory() const
 
 ofstream DirectoryService::create_file(string filename) const
 {
-	return ofstream(path + "\\" + filename);
+	auto file = ofstream(path + "\\" + filename);
+
+	if (file.is_open()) {
+		return file;
+	}
+	else {
+		throw std::runtime_error("Could not create file");
+	}
+
 }
 
 bool DirectoryService::exists_file(string filename) const
@@ -65,9 +73,22 @@ bool DirectoryService::drop_file(string filename) const
 	return result == 0;
 }
 
-fstream DirectoryService::open_file(string filename) const
-{
-	fstream file;
-	file.open(path + "\\" + filename, std::ios::in | std::ios::out);
+ifstream  DirectoryService::open_read_file(string filename) const {
+	ifstream file(path + "\\" + filename);
 	return file;
 }
+
+ofstream DirectoryService::open_write_to_file(string filename) const
+{
+	auto full_path = path + "\\" + filename;
+	ofstream file(full_path, std::ios::app);
+
+	return file;
+}
+
+fstream DirectoryService::open_modify_file(string filename) const
+{
+	fstream file(path + "\\" + filename, std::ios::in | std::ios::out);
+	return file;
+}
+

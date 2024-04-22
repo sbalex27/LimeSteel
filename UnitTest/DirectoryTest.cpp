@@ -106,7 +106,7 @@ namespace UnitTest
 			system(("echo. 2> " + string(TESTS_PATH) + "\\test.csv").c_str());
 
 			// Act
-			auto file = manager->open_file("test.csv");
+			auto file = manager->open_read_file("test.csv");
 
 			// Assert
 			auto isOpen = file.is_open();

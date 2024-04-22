@@ -58,6 +58,10 @@ public:
 	/// </summary>
 	/// <param name="filename">Nombre del archivo</param>
 	/// <returns>Archivo existente que se ha abierto</returns>
-	fstream open_file(string filename) const;
+	ifstream open_read_file(string filename) const;
+
+	ofstream open_write_to_file(string filename) const;
+
+	fstream open_modify_file(string filename) const;
 };
 
