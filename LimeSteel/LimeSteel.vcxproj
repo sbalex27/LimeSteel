@@ -132,13 +132,18 @@
     <ClCompile Include="DirectoryService.cpp" />
     <ClCompile Include="GuidFactory.cpp" />
     <ClCompile Include="LimeSteel.cpp" />
-    <ClCompile Include="Table.h" />
+    <ClCompile Include="Primitives.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CsvDriver.h" />
     <ClInclude Include="DataSeeder.h" />
     <ClInclude Include="DirectoryService.h" />
     <ClInclude Include="GuidFactory.h" />
+    <ClInclude Include="Table.h" />
+    <ClInclude Include="InvalidRowSizeException.h" />
+    <ClInclude Include="Person.h" />
+    <ClInclude Include="Model.h" />
+    <ClInclude Include="PersonTable.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

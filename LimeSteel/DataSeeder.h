@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Table.h"
+#include "Primitives.h"
 #include <string>
 
 using std::string;
@@ -11,5 +11,6 @@ class DataSeeder
 public:
 	string random_string(int length);
 	Row get_random_row(int columns);
+	vector<Row> get_random_table(int rows, int columns);
 };
 

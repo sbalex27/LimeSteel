@@ -16,6 +16,15 @@
     <Filter Include="Header Files\Structs">
       <UniqueIdentifier>{0a08f733-0af9-4be4-8752-7f1dfe8887d4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Data">
+      <UniqueIdentifier>{a0706fb1-73b9-4ada-bdb6-aff58116477c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Models">
+      <UniqueIdentifier>{55ceba15-f2bc-400e-a3cf-9f6080c07c4d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Exceptions">
+      <UniqueIdentifier>{b7cdeeb5-5f9e-4614-8e86-a6381e78bd44}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="LimeSteel.cpp">
@@ -23,9 +32,6 @@
     </ClCompile>
     <ClCompile Include="DirectoryService.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Table.h">
-      <Filter>Header Files\Structs</Filter>
     </ClCompile>
     <ClCompile Include="CsvDriver.cpp">
       <Filter>Source Files</Filter>
@@ -35,6 +41,9 @@
     </ClCompile>
     <ClCompile Include="DataSeeder.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Primitives.h">
+      <Filter>Header Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -49,6 +58,21 @@
     </ClInclude>
     <ClInclude Include="DataSeeder.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Model.h">
+      <Filter>Header Files\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="Person.h">
+      <Filter>Header Files\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="InvalidRowSizeException.h">
+      <Filter>Header Files\Exceptions</Filter>
+    </ClInclude>
+    <ClInclude Include="PersonTable.h">
+      <Filter>Header Files\Data</Filter>
+    </ClInclude>
+    <ClInclude Include="Table.h">
+      <Filter>Header Files\Data</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

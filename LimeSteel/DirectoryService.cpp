@@ -88,7 +88,8 @@ ofstream DirectoryService::open_write_to_file(string filename) const
 
 fstream DirectoryService::open_modify_file(string filename) const
 {
+	// Abre el archivo en modo de lectura y escritura
 	fstream file(path + "\\" + filename, std::ios::in | std::ios::out);
+
 	return file;
 }
-

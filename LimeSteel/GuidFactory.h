@@ -1,9 +1,7 @@
 #pragma once
-#include <string>
+#include "Primitives.h"
 
 using std::string;
-
-typedef string Guid;
 
 class GuidFactory
 {

@@ -25,3 +25,13 @@ Row DataSeeder::get_random_row(int columns)
 	return row;
 }
 
+vector<Row> DataSeeder::get_random_table(int rows, int columns)
+{
+	vector<Row> rowsVector;
+	for (int i = 0; i < rows; i++)
+	{
+		rowsVector.push_back(this->get_random_row(columns));
+	}
+	return rowsVector;
+}
+

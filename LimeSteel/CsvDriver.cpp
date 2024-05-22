@@ -1,6 +1,6 @@
 #include "CsvDriver.h"
 #include "DirectoryService.h"
-#include "Table.h"
+#include "Primitives.h"
 #include "iostream"
 #include "fstream"
 #include "string"
@@ -9,6 +9,7 @@
 using std::ofstream;
 using std::fstream;
 using std::string;
+using std::endl;
 using std::getline;
 
 CsvDriver::CsvDriver(DirectoryService* directory, GuidFactory* guidFactory)
@@ -58,6 +59,21 @@ Table CsvDriver::select(string filename)
 	return table;
 }
 
+Row CsvDriver::find(string filename, Guid guid)
+{
+	auto file = this->directory->open_read_file(filename);
+
+	string line;
+	while (getline(file, line))
+	{
+		Row row = cast_line_to_row(line);
+		if (row[0] == guid) // Si contiene el guid
+		{
+			return row;
+		}
+	}
+}
+
 Row CsvDriver::insert(string filename, Row row)
 {
 	if (this->directory->exists_file(filename) == false) {
@@ -84,21 +100,79 @@ Row CsvDriver::insert(string filename, Row row)
 	return row;
 }
 
-void CsvDriver::update(string filename, Guid guid, Row row)
+vector<Row> CsvDriver::insert(string filename, vector<Row> rows)
+{
+	vector<Row> insertedRows;
+	for (auto& row : rows) {
+		insertedRows.push_back(insert(filename, row));
+	}
+	return insertedRows;
+}
+
+void CsvDriver::update(string filename, Guid guid, Row newRow)
 {
 	auto file = this->directory->open_modify_file(filename);
 
 	string line;
+	string newLine;
+	std::streampos pos;
+	//long startLine = 0;
+	long shouldStartLine = 0;
+
 	while (getline(file, line))
 	{
 		Row row = cast_line_to_row(line);
-		if (row[0] == guid) // Si contiene el guid
+		if (row[0] == guid)
 		{
-			for (int i = 0; i < row.size(); i++)
-			{
-				line.replace(line.find(row[i]), row[i].size(), row[i]);
+			// Volver al primer caracter de la linea
+			
+			pos = file.tellg();
+			// Obtener la posición como un entero
+			std::streamoff posInt = static_cast<std::streamoff>(pos) - 1;
+
+			// Calcular la posición de inicio de la línea
+			auto startLine = posInt - static_cast<std::streamoff>(line.length()) - 1;
+			startLine = startLine < 0 ? 0 : startLine;
+			shouldStartLine = startLine;
+			// Modificamos la línea utilizando replace
+			newLine = line;
+			for (int i = 0; i < newRow.size(); ++i) {
+				size_t startPos = newLine.find(row[i]);
+				newLine.replace(startPos, row[i].length(), newRow[i]);
 			}
-			break;
+			break; // Salir del bucle después de encontrar la línea a modificar
 		}
 	}
+
+	// Volver al principio de la línea para sobrescribirla
+	file.seekp(shouldStartLine);
+
+	// Escribir la línea modificada en el archivo
+	file << newLine << endl;
+
+	file.close();
+}
+
+void CsvDriver::new_csv(string filename)
+{
+	auto endsWithCsv = filename.find(".csv") != string::npos;
+
+	if (!endsWithCsv) {
+		filename += ".csv";
+	}
+
+	auto exists = this->directory->exists_directory();
+
+	if (!exists) {
+		this->directory->create_directory();
+	}
+
+	if (!this->directory->exists_file(filename)) {
+		this->directory->create_file(filename);
+	}
+}
+
+void CsvDriver::delete_csv(string filename)
+{
+	this->directory->drop_file(filename);
 }

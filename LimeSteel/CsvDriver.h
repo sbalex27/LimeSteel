@@ -1,7 +1,7 @@
 #pragma once
 #include "DirectoryService.h"
 #include "GuidFactory.h"
-#include "Table.h"
+#include "Primitives.h"
 
 class CsvDriver
 {
@@ -21,6 +21,7 @@ public:
 	/// <returns>Tabla no serializada</returns>
 	Table select(string filename);
 
+	Row find(string file, Guid guid);
 	/// <summary>
 	/// Inserta una nueva fila en un archivo CSV (equivalente a un registro en una tabla).
 	/// Este método genera un GUID para la fila en la primera columna.
@@ -30,6 +31,12 @@ public:
 	/// <returns>Fila insertada (con el GUID generado)</returns>
 	Row insert(string filename, Row row);
 
+	vector<Row> insert(string filename, vector<Row> rows);
+
 	void update(string filename, Guid guid, Row row);
+
+	void new_csv(string filename);
+	void delete_csv(string filename);
+
 };
 
