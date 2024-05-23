@@ -1,20 +1,49 @@
-// LimeSteel.cpp : This file contains the 'main' function. Program execution begins and ends there.
-//
-
 #include <iostream>
+#include <string>
+
+using std::cout;
+using std::endl;
+using std::cin;
+using std::string;
 
 int main()
 {
-    std::cout << "Hello World!\n";
+	int menu_option;
+	do
+	{
+		cout << "ADMINISTRADOR DE FACTURAS - LIMESTEEL" << endl;
+		cout << "----------------------------------------" << endl;
+		cout << "1. Crear factura" << endl;
+		cout << "2. Consultar factura" << endl;
+		cout << "3. Modificar factura" << endl;
+		cout << "4. Eliminar factura" << endl;
+		cout << "5. Salir" << endl;
+		cout << "----------------------------------------" << endl;
+		cout << "Seleccione una opcion: ";
+		cin >> menu_option;
+
+		switch (menu_option)
+		{
+		case 1:
+			cout << "Crear factura" << endl;
+			break;
+		case 2:
+			cout << "Consultar factura" << endl;
+			break;
+		case 3:
+			cout << "Modificar factura" << endl;
+			break;
+		case 4:
+			cout << "Eliminar factura" << endl;
+			break;
+		case 5:
+			cout << "Saliendo..." << endl;
+			break;
+		default:
+			cout << "Opcion no valida" << endl;
+			break;
+		}
+		system("pause");
+		system("cls");
+	} while (menu_option != 5);
 }
-
-// Run program: Ctrl + F5 or Debug > Start Without Debugging menu
-// Debug program: F5 or Debug > Start Debugging menu
-
-// Tips for Getting Started: 
-//   1. Use the Solution Explorer window to add/manage files
-//   2. Use the Team Explorer window to connect to source control
-//   3. Use the Output window to see build output and other messages
-//   4. Use the Error List window to view errors
-//   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
-//   6. In the future, to open this project again, go to File > Open > Project and select the .sln file

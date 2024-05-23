@@ -36,9 +36,11 @@ namespace UnitTest
 			auto person = Person();
 			person.name = "John";
 			person.lastname = "Doe";
+			person.nit = "CF";
+			person.address = "Ciudad";
 			person.phone = "123456789";
 			person.age = 30;
-			auto expected = Row{ "John", "Doe", "123456789", "30" };
+			auto expected = Row{ "John", "Doe", "CF", "Ciudad", "123456789", "30" };
 
 			// Act
 			auto actual = person.to_row();
@@ -51,11 +53,13 @@ namespace UnitTest
 		{
 			// Arrange
 			auto guid = guidFactory->create();
-			auto row = Row{ guid, "John", "Doe", "123456789", "30" };
+			auto row = Row{ guid, "John", "Doe", "CF", "Ciudad", "123456789", "30" };
 			auto expected = Person();
 			expected.guid = guid;
 			expected.name = "John";
 			expected.lastname = "Doe";
+			expected.nit = "CF";
+			expected.address = "Ciudad";
 			expected.phone = "123456789";
 			expected.age = 30;
 
@@ -66,6 +70,8 @@ namespace UnitTest
 			Assert::AreEqual(expected.guid, actual.guid);
 			Assert::AreEqual(expected.name, actual.name);
 			Assert::AreEqual(expected.lastname, actual.lastname);
+			Assert::AreEqual(expected.nit, actual.nit);
+			Assert::AreEqual(expected.address, actual.address);
 			Assert::AreEqual(expected.phone, actual.phone);
 			Assert::AreEqual(expected.age, actual.age);
 		}
@@ -73,8 +79,8 @@ namespace UnitTest
 		TEST_METHOD(SerializeWithGuid) {
 			// Arrange
 			auto guid = guidFactory->create();
-			auto person = Person(guid, "John", "Doe", "123456789", 30);
-			auto expected = Row{ guid, "John", "Doe", "123456789", "30" };
+			auto person = Person(guid, "John", "Doe", "CF", "Ciudad", "123456789", 30);
+			auto expected = Row{ guid, "John", "Doe", "CF", "Ciudad", "123456789", "30" };
 
 			// Act
 			auto actual = person.to_row();
@@ -157,7 +163,7 @@ namespace UnitTest
 
 		TEST_METHOD(InsertFullName)
 		{
-						// Arrange
+			// Arrange
 			auto person = new Person();
 			person->name = "Sergio Alexander";
 			person->lastname = "Batres Escobedo";

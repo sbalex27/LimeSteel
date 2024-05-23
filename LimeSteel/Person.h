@@ -1,7 +1,6 @@
 #pragma once
 #include <stdexcept>
 #include "Model.h"
-#include "InvalidRowSizeException.h"
 #include "string.h"
 
 class Person : public Model
@@ -9,29 +8,37 @@ class Person : public Model
 public:
 	string name;
 	string lastname;
+	string nit;
+	string address;
 	string phone;
 	int age = 0;
 
 	Person() {};
 	Person(Row row) {
-		if (row.size() != 5) throw InvalidRowSizeException("Person row size must be 5");
+		assert_row(row, 7);
 		guid = row[0];
 		name = row[1];
 		lastname = row[2];
-		phone = row[3];
-		age = stoi(row[4]);
+		nit = row[3];
+		address = row[4];
+		phone = row[5];
+		age = stoi(row[6]);
 	}
-	Person(Guid guid, string name, string lastname, string phone, int age) {
+	Person(Guid guid, string name, string lastname, string nit, string address, string phone, int age) {
 		this->guid = guid;
 		this->name = name;
 		this->lastname = lastname;
+		this->nit = nit;
+		this->address = address;
 		this->phone = phone;
 		this->age = age;
 	}
-	Person(string name, string lastname, string phone, int age) {
-		this->guid = guid;
+
+	Person(string name, string lastname, string nit, string address, string phone, int age) {
 		this->name = name;
 		this->lastname = lastname;
+		this->nit = nit;
+		this->address = address;
 		this->phone = phone;
 		this->age = age;
 	}
@@ -47,6 +54,8 @@ public:
 		}
 		row.push_back(name);
 		row.push_back(lastname);
+		row.push_back(nit);
+		row.push_back(address);
 		row.push_back(phone);
 		row.push_back(std::to_string(age));
 		return row;

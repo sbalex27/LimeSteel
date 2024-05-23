@@ -105,7 +105,7 @@ namespace UnitTest
 			Assert::IsTrue(first && second && third);
 		}
 
-		TEST_METHOD(cast_row_to_line) 
+		TEST_METHOD(cast_row_to_line)
 		{
 			// Arrange
 			vector<string> row = { "1", "2", "3" };
@@ -121,9 +121,9 @@ namespace UnitTest
 		{
 			// Arrange
 			vector<Person*> people;
-			people.push_back(new Person("Alex", "Smith", "123456", 30));
-			people.push_back(new Person("John", "Doe", "654321", 40));
-			people.push_back(new Person("Jane", "Doe", "987654", 50));
+			people.push_back(new Person("Alex", "Smith", "CF", "Ciudad", "123456", 30));
+			people.push_back(new Person("John", "Doe", "CF", "Ciudad", "654321", 40));
+			people.push_back(new Person("Jane", "Doe", "CF", "Ciudad", "987654", 50));
 
 			// Act
 			for (auto person : people)

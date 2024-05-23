@@ -1,7 +1,5 @@
 #pragma once
 #include "Model.h"
-#include "InvalidRowSizeException.h"
-
 
 class Product : public Model
 {
@@ -13,7 +11,7 @@ public:
 
 	Product() {};
 	Product(Row row) {
-		if (row.size() != 5) throw InvalidRowSizeException("Product row size must be 5");
+		assert_row(row, 5);
 		guid = row[0];
 		invoice_guid = row[1];
 		name = row[2];
@@ -56,7 +54,7 @@ public:
 
 	Invoice() {};
 	Invoice(Row row) {
-		if (row.size() != 5) throw InvalidRowSizeException("Invoice row size must be 4");
+		assert_row(row, 5);
 		this->guid = row[0];
 		this->person_guid = row[1];
 		this->invoice_number = stod(row[2]);
