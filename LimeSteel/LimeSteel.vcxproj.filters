@@ -83,5 +83,8 @@
     <ClInclude Include="InvoiceRepository.h">
       <Filter>Header Files\Data</Filter>
     </ClInclude>
+    <ClInclude Include="Migrations.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

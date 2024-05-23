@@ -36,6 +36,9 @@
     <ClCompile Include="InvoiceRepositoryTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="MigrationsTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
