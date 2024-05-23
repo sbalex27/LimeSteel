@@ -5,6 +5,8 @@
 #include "fstream"
 #include "string"
 #include <sstream>
+#include "GuidFactory.h"
+#include "Model.h"
 
 using std::ofstream;
 using std::fstream;
@@ -74,6 +76,21 @@ Row CsvDriver::find(string filename, Guid guid)
 	}
 }
 
+bool CsvDriver::exists(string filename, Guid guid) {
+	auto file = this->directory->open_read_file(filename);
+
+	string line;
+	while (getline(file, line))
+	{
+		Row row = cast_line_to_row(line);
+		if (row[0] == guid) // Si contiene el guid
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
 Row CsvDriver::insert(string filename, Row row)
 {
 	if (this->directory->exists_file(filename) == false) {
@@ -98,6 +115,14 @@ Row CsvDriver::insert(string filename, Row row)
 	outputFile.close();
 
 	return row;
+}
+
+Row CsvDriver::insert_model(string filename, Model* model)
+{
+	auto row_to_insert = model->to_row();
+	auto inserted_row = this->insert(filename, row_to_insert);
+	model->guid = inserted_row[0];
+	return inserted_row;
 }
 
 vector<Row> CsvDriver::insert(string filename, vector<Row> rows)
@@ -125,7 +150,7 @@ void CsvDriver::update(string filename, Guid guid, Row newRow)
 		if (row[0] == guid)
 		{
 			// Volver al primer caracter de la linea
-			
+
 			pos = file.tellg();
 			// Obtener la posición como un entero
 			std::streamoff posInt = static_cast<std::streamoff>(pos) - 1;

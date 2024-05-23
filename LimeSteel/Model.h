@@ -9,6 +9,9 @@ public:
 	bool has_guid() const {
 		return guid != "";
 	}
+	bool has_not_guid() const {
+		return guid == "";
+	}
 	virtual Row to_row() = 0;
 };
 

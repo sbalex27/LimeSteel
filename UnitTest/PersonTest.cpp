@@ -12,7 +12,7 @@ namespace UnitTest
 	public:
 		PersonTable* table = nullptr;
 		GuidFactory* guidFactory = nullptr;
-		CsvDriver* driver = nullptr;
+		CsvDriver* csv = nullptr;
 		DataSeeder* seeder = nullptr;
 
 		TEST_METHOD_INITIALIZE(Setup)
@@ -20,8 +20,8 @@ namespace UnitTest
 			this->seeder = new DataSeeder();
 			auto directory = new DirectoryService(TEST_DIRECTORY);
 			guidFactory = new GuidFactory();
-			this->driver = new CsvDriver(directory, guidFactory);
-			this->table = new PersonTable(driver);
+			this->csv = new CsvDriver(directory, guidFactory);
+			this->table = new PersonTable(csv);
 			this->table->refresh();
 		}
 
@@ -132,8 +132,8 @@ namespace UnitTest
 		{
 			// Arrange
 			auto seed = this->seeder->get_random_table(20, 4);
-			auto filename = this->table->table_name;
-			auto seeded = this->driver->insert(filename, seed);
+			auto filename = this->table->invoices_table_name;
+			auto seeded = this->csv->insert(filename, seed);
 			auto original = new Person();
 			original->name = "John";
 			original->lastname = "Doe";

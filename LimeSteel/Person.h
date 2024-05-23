@@ -28,6 +28,13 @@ public:
 		this->phone = phone;
 		this->age = age;
 	}
+	Person(string name, string lastname, string phone, int age) {
+		this->guid = guid;
+		this->name = name;
+		this->lastname = lastname;
+		this->phone = phone;
+		this->age = age;
+	}
 
 	string get_full_name() const {
 		return name + " " + lastname;

@@ -74,5 +74,11 @@
     <ClInclude Include="Table.h">
       <Filter>Header Files\Data</Filter>
     </ClInclude>
+    <ClInclude Include="Invoice.h">
+      <Filter>Header Files\Data</Filter>
+    </ClInclude>
+    <ClInclude Include="InvoiceRepository.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

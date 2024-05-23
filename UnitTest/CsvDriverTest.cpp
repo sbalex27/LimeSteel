@@ -4,6 +4,7 @@
 #include "../LimeSteel/CsvDriver.cpp"
 #include "../LimeSteel/DataSeeder.h"
 #include "../LimeSteel/DataSeeder.cpp"
+#include "../LimeSteel/Person.h"
 #include <string>
 #include "vector"
 
@@ -25,15 +26,14 @@ namespace UnitTest
 		DirectoryService* directory = nullptr;
 		DataSeeder* dataSeeder = nullptr;
 
-
 		TEST_CLASS_INITIALIZE(ClassInitialize)
 		{
 			system(("rmdir /s /q " + string(TESTS_PATH)).c_str());
-			//system(("mkdir " + string(TESTS_PATH)).c_str());
 		}
 
 		TEST_METHOD_INITIALIZE(Setup)
 		{
+			system(("mkdir " + string(TESTS_PATH)).c_str());
 			// Instantiate the objects
 			this->directory = new DirectoryService(TESTS_PATH);
 			this->guidFactory = new GuidFactory();
@@ -43,6 +43,7 @@ namespace UnitTest
 
 		TEST_METHOD_CLEANUP(Teardown)
 		{
+			system(("rmdir /s /q " + string(TESTS_PATH)).c_str());
 			delete this->directory;
 			delete this->guidFactory;
 			delete this->dataSeeder;
@@ -114,6 +115,40 @@ namespace UnitTest
 
 			// Assert
 			Assert::AreEqual(line.c_str(), "1,2,3");
+		}
+
+		TEST_METHOD(insert_models)
+		{
+			// Arrange
+			vector<Person*> people;
+			people.push_back(new Person("Alex", "Smith", "123456", 30));
+			people.push_back(new Person("John", "Doe", "654321", 40));
+			people.push_back(new Person("Jane", "Doe", "987654", 50));
+
+			// Act
+			for (auto person : people)
+			{
+				this->csv->insert_model(TESTS_FILE, person);
+			}
+
+			// Assert
+			auto table = this->csv->select(TESTS_FILE);
+			auto rowCount = table.size() == people.size();
+			auto message = L"Expected " + std::to_wstring(people.size()) + L" rows, got " + std::to_wstring(table.size());
+			Assert::IsTrue(rowCount, message.c_str());
+
+			auto names_message = L"Names do not match";
+			auto first = table[0][1] == "Alex";
+			auto second = table[1][1] == "John";
+			auto third = table[2][1] == "Jane";
+			Assert::IsTrue(first && second && third, names_message);
+
+			auto guids_message = L"Guids do not match";
+			auto first_guid = this->guidFactory->is_guid(people[0]->guid);
+			auto second_guid = this->guidFactory->is_guid(people[1]->guid);
+			auto third_guid = this->guidFactory->is_guid(people[2]->guid);
+
+			Assert::IsTrue(first_guid && second_guid && third_guid, guids_message);
 		}
 	};
 }
