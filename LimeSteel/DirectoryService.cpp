@@ -8,38 +8,47 @@ using std::ifstream;
 using std::ofstream;
 using std::fstream;
 
-DirectoryService::DirectoryService(string path)
+DirectoryService::DirectoryService(string path, string files_path)
 {
 	this->path = path;
+	this->files_path = files_path;
 }
 
-bool DirectoryService::create_directory() const
+//string DirectoryService::path_type(DirectoryType type)
+//{
+//	return type == DirectoryType::Database ? path : files_path;
+//}
+
+bool DirectoryService::create_directory(DirectoryType type) const
 {
-	string command = "mkdir " + string(path);
+	auto path_type = type == DirectoryType::Database ? path : files_path;
+	string command = "mkdir " + string(path_type);
 	auto result = system(command.c_str());
 	return result == 0;
 }
 
-bool DirectoryService::drop_directory() const
+bool DirectoryService::drop_directory(DirectoryType type) const
 {
-	string command = "rmdir /s /q " + string(path);
+	auto path_type = type == DirectoryType::Database ? path : files_path;
+	string command = "rmdir /s /q " + string(path_type);
 	auto result = system(command.c_str());
 	return result == 0;
 }
 
-bool DirectoryService::exists_directory() const
+bool DirectoryService::exists_directory(DirectoryType type) const
 {
 	struct stat sb;
-
-	if (stat(path.c_str(), &sb) == 0)
+	auto path_type = type == DirectoryType::Database ? path : files_path;
+	if (stat(path_type.c_str(), &sb) == 0)
 		return true;
 	else
 		return false;
 }
 
-ofstream DirectoryService::create_file(string filename) const
+ofstream DirectoryService::create_file(string filename, DirectoryType type) const
 {
-	auto file = ofstream(path + "\\" + filename);
+	auto path_type = type == DirectoryType::Database ? path : files_path;
+	auto file = ofstream(path_type + "\\" + filename);
 
 	if (file.is_open()) {
 		return file;
@@ -47,12 +56,12 @@ ofstream DirectoryService::create_file(string filename) const
 	else {
 		throw std::runtime_error("Could not create file");
 	}
-
 }
 
-bool DirectoryService::exists_file(string filename) const
+bool DirectoryService::exists_file(string filename, DirectoryType type) const
 {
-	auto path = this->path + "\\" + filename;
+	auto path_type = type == DirectoryType::Database ? path : files_path;
+	auto path = path_type + "\\" + filename;
 	ifstream file;
 	file.open(path);
 	if (file.is_open())

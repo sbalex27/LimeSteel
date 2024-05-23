@@ -143,6 +143,7 @@
     <ClInclude Include="Invoice.h" />
     <ClInclude Include="InvoiceRepository.h" />
     <ClInclude Include="Migrations.h" />
+    <ClInclude Include="Printer.h" />
     <ClInclude Include="Table.h" />
     <ClInclude Include="InvalidRowSizeException.h" />
     <ClInclude Include="Person.h" />

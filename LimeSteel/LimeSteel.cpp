@@ -5,6 +5,7 @@
 #include "Migrations.h"
 #include "InvoiceRepository.h"
 #include "PersonRepository.h"
+#include "Printer.h"
 #include <iomanip>
 #include <vector>
 
@@ -66,15 +67,17 @@ static void print_invoice_ui(Invoice* invoice)
 int main()
 {
 	// Register
-	DirectoryService* directoryService = new DirectoryService(DATABASE_PATH);
+	DirectoryService* directoryService = new DirectoryService(DATABASE_PATH, FILES_PATH);
 	Migrations* migrations = new Migrations(directoryService);
 	GuidFactory* guidFactory = new GuidFactory();
 	CsvDriver* csvDriver = new CsvDriver(directoryService, guidFactory);
 	InvoiceRepository* invoiceRepository = new InvoiceRepository(csvDriver);
 	PersonRepository* personRepository = new PersonRepository(csvDriver);
+	Printer* printer = new Printer(directoryService);
 
 	// Bootstrap
 	migrations->Up();
+	printer->Up();
 
 	int menu_option;
 	do
@@ -170,6 +173,14 @@ int main()
 			}
 			system("cls");
 			print_invoice_ui(invoice);
+			cout << "Desea imprimir la factura? (1 = Si, 0 = No): ";
+			int print_option;
+			cin >> print_option;
+			if (print_option == 1)
+			{
+				string file_path = printer->print_invoice_to_file(invoice);
+				cout << "Factura impresa en: " << file_path << endl;
+			}
 			break;
 		}
 		case 3:
