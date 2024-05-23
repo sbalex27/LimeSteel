@@ -40,7 +40,7 @@ namespace UnitTest
 
 		TEST_METHOD(IsNotGuidWord)
 		{
-			auto guid = "FooBar";
+			auto guid = "FooBarHelloWorld";
 			auto isGuid = this->guidFactory->is_guid(guid);
 
 			Assert::IsFalse(isGuid);

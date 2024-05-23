@@ -58,9 +58,11 @@ public:
 
 			// Get person for each invoice
 			auto person_row = csv->find(PEOPLE_TABLE, invoice->person_guid);
-			invoice->person = new Person(person_row);
-			invoice->person_guid = invoice->person->guid;
-			invoices.push_back(invoice);
+			if (person_row.size() != 0) {
+				invoice->person = new Person(person_row);
+				invoice->person_guid = invoice->person->guid;
+				invoices.push_back(invoice);
+			}
 		}
 
 		return invoices;

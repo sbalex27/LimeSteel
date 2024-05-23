@@ -1,36 +1,29 @@
 #include "GuidFactory.h"
+#include <string>
+#include <random>
 
 Guid GuidFactory::create()
 {
-	string guid = "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx";
-	for (int i = 0; i < guid.size(); i++)
-	{
-		auto& c = guid[i];
-		if (c == 'x')
-		{
-			c = rand() % 16;
-			c = c < 10 ? '0' + c : 'a' + c - 10;
-		}
-		else if (c == 'y')
-		{
-			c = rand() % 4;
-			c = '8' + c;
-		}
-	}
-	return guid;
+    static const std::string characters = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    static std::random_device rd;
+    static std::mt19937 gen(rd());
+    static std::uniform_int_distribution<> dis(0, characters.size() - 1);
+
+    std::string random_string;
+    for (size_t i = 0; i < 6; ++i) {
+        random_string += characters[dis(gen)];
+    }
+
+    return random_string;
 }
 
-bool GuidFactory::is_guid(Guid guid)
+bool GuidFactory::is_guid(const Guid guid)
 {
-	auto isSize = guid.size() == 36;
-	if(!isSize) return false;
-	auto isDash = guid[8] == '-' && guid[13] == '-' && guid[18] == '-' && guid[23] == '-';
-
-	return isDash;
+    if(guid.size() != 6) return false;
 }
 
-bool GuidFactory::is_not_guid(Guid guid)
+bool GuidFactory::is_not_guid(const Guid guid)
 {
-	return !is_guid(guid);
+    return !is_guid(guid);
 }
 
