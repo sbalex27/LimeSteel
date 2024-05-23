@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "CppUnitTest.h"
 #include "../LimeSteel/InvoiceRepository.h"
+#include "../LimeSteel/Constants.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
@@ -71,7 +72,7 @@ namespace UnitTest
 			auto invoice_guid = this->repository->insert(invoice);
 
 			// Assert
-			auto exists = this->csv->exists("invoices.csv", invoice_guid);
+			auto exists = this->csv->exists(INVOICES_TABLE, invoice_guid);
 			Assert::IsTrue(exists);
 		}
 
@@ -208,7 +209,7 @@ namespace UnitTest
 			person->phone = "41925033";
 			person->age = 24;
 
-			this->csv->insert_model("people.csv", person);
+			this->csv->insert_model(PEOPLE_TABLE, person);
 
 			Guid original_person_guid = person->guid;
 
@@ -222,7 +223,7 @@ namespace UnitTest
 			auto invoice_guid = this->repository->insert(invoice);
 
 			// Assert
-			auto table = this->csv->select("people.csv");
+			auto table = this->csv->select(PEOPLE_TABLE);
 			int guid_count = 0;
 
 			for (auto row : table)
@@ -273,7 +274,7 @@ namespace UnitTest
 			// Assert
 			for (auto product : invoice->products)
 			{
-				auto exists = this->csv->exists("products.csv", product->guid);
+				auto exists = this->csv->exists(PRODUCTS_TABLE, product->guid);
 				Assert::IsTrue(exists);
 			}
 		}
@@ -310,7 +311,7 @@ namespace UnitTest
 			this->repository->insert(invoice);
 
 			// Assert
-			auto exists = this->csv->exists("people.csv", person->guid);
+			auto exists = this->csv->exists(PEOPLE_TABLE, person->guid);
 			Assert::IsTrue(exists);
 		}
 	};

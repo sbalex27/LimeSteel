@@ -2,35 +2,34 @@
 #include "CsvDriver.h"
 #include "Table.h"
 #include "Person.h"
+#include "Constants.h"
 
-
-class PersonTable : public TableFile
+class PersonRepository : public TableFile
 {
 private:
 	CsvDriver* csv;
 public:
-	string invoices_table_name = "people.csv";
-	PersonTable(CsvDriver* csv) {
+	PersonRepository(CsvDriver* csv) {
 		this->csv = csv;
 	}
 
 	void up() {
-		csv->new_csv(invoices_table_name);
+		csv->new_csv(PEOPLE_TABLE);
 	}
 
 	void down() {
-		csv->delete_csv(invoices_table_name);
+		csv->delete_csv(PEOPLE_TABLE);
 	}
 
 	Guid insert(Person* person) {
-		auto insert = csv->insert(invoices_table_name, person->to_row());
+		auto insert = csv->insert(PEOPLE_TABLE, person->to_row());
 		person->guid = insert[0];
 		return person->guid;
 
 	}
 
 	vector<Person> select() {
-		vector<Row> rows = csv->select(invoices_table_name);
+		vector<Row> rows = csv->select(PEOPLE_TABLE);
 		vector<Person> persons;
 		for (Row row : rows) {
 			persons.push_back(Person(row));
@@ -40,11 +39,11 @@ public:
 
 	void update(Person* person) {
 		if(!person->has_guid()) throw std::invalid_argument("Person must have a GUID");
-		csv->update(invoices_table_name, person->guid, person->to_row());
+		csv->update(PEOPLE_TABLE, person->guid, person->to_row());
 	}
 
 	Person find(Guid guid) {
-		Row row = csv->find(invoices_table_name, guid);
+		Row row = csv->find(PEOPLE_TABLE, guid);
 		return Person(row);
 	}
 };

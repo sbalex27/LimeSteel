@@ -45,6 +45,9 @@
     <ClCompile Include="Primitives.h">
       <Filter>Header Files</Filter>
     </ClCompile>
+    <ClCompile Include="Constants.h">
+      <Filter>Header Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DirectoryService.h">
@@ -68,17 +71,17 @@
     <ClInclude Include="InvalidRowSizeException.h">
       <Filter>Header Files\Exceptions</Filter>
     </ClInclude>
-    <ClInclude Include="PersonTable.h">
+    <ClInclude Include="PersonRepository.h">
       <Filter>Header Files\Data</Filter>
     </ClInclude>
     <ClInclude Include="Table.h">
       <Filter>Header Files\Data</Filter>
     </ClInclude>
     <ClInclude Include="Invoice.h">
-      <Filter>Header Files\Data</Filter>
+      <Filter>Header Files\Models</Filter>
     </ClInclude>
     <ClInclude Include="InvoiceRepository.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Data</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

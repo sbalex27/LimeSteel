@@ -127,6 +127,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Constants.h" />
     <ClCompile Include="CsvDriver.cpp" />
     <ClCompile Include="DataSeeder.cpp" />
     <ClCompile Include="DirectoryService.cpp" />
@@ -145,7 +146,7 @@
     <ClInclude Include="InvalidRowSizeException.h" />
     <ClInclude Include="Person.h" />
     <ClInclude Include="Model.h" />
-    <ClInclude Include="PersonTable.h" />
+    <ClInclude Include="PersonRepository.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

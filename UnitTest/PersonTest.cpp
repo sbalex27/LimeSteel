@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "CppUnitTest.h"
-#include "../LimeSteel/PersonTable.h"
+#include "../LimeSteel/PersonRepository.h"
 #include "../LimeSteel/DataSeeder.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
@@ -10,7 +10,7 @@ namespace UnitTest
 	TEST_CLASS(PersonTest)
 	{
 	public:
-		PersonTable* table = nullptr;
+		PersonRepository* table = nullptr;
 		GuidFactory* guidFactory = nullptr;
 		CsvDriver* csv = nullptr;
 		DataSeeder* seeder = nullptr;
@@ -21,7 +21,7 @@ namespace UnitTest
 			auto directory = new DirectoryService(TEST_DIRECTORY);
 			guidFactory = new GuidFactory();
 			this->csv = new CsvDriver(directory, guidFactory);
-			this->table = new PersonTable(csv);
+			this->table = new PersonRepository(csv);
 			this->table->refresh();
 		}
 
@@ -132,8 +132,7 @@ namespace UnitTest
 		{
 			// Arrange
 			auto seed = this->seeder->get_random_table(20, 4);
-			auto filename = this->table->invoices_table_name;
-			auto seeded = this->csv->insert(filename, seed);
+			auto seeded = this->csv->insert(PEOPLE_TABLE, seed);
 			auto original = new Person();
 			original->name = "John";
 			original->lastname = "Doe";
