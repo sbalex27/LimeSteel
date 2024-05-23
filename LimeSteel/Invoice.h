@@ -51,6 +51,7 @@ public:
 	double invoice_number = 0.0;
 	string description;
 	double amount_paid = 0.0;
+	bool is_active = true;
 
 	// Navigation properties
 	Person* person = nullptr;
@@ -58,12 +59,13 @@ public:
 
 	Invoice() {};
 	Invoice(Row row) {
-		assert_row(row, 5);
+		assert_row(row, 6);
 		this->guid = row[0];
 		this->person_guid = row[1];
 		this->invoice_number = stod(row[2]);
 		this->description = row[3];
 		this->amount_paid = stod(row[4]);
+		this->is_active = row[5] == "1";
 	}
 
 	Invoice(Guid guid, Guid person_guid, double invoice_number, string description, double amount_paid) {
@@ -111,6 +113,7 @@ public:
 		row.push_back(std::to_string(invoice_number));
 		row.push_back(description);
 		row.push_back(std::to_string(amount_paid));
+		row.push_back(is_active ? "1" : "0");
 		return row;
 	}
 };

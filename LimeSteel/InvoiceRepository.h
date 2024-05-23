@@ -83,4 +83,15 @@ public:
 	{
 		csv->update(INVOICES_TABLE, invoice->guid, invoice->to_row());
 	}
+
+	Invoice* find_by_invoice_number(double number)
+	{
+		auto all = this->all();
+		for (auto invoice : all) {
+			if (invoice->invoice_number == number) {
+				return invoice;
+			}
+		}
+		return nullptr;
+	}
 };

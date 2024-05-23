@@ -5,11 +5,14 @@
 #include "Migrations.h"
 #include "InvoiceRepository.h"
 #include "PersonRepository.h"
+#include <iomanip>
+#include <vector>
 
 using std::cout;
 using std::endl;
 using std::cin;
 using std::string;
+using std::setw;
 
 static void title(string title)
 {
@@ -23,6 +26,41 @@ static void subtitle(string subtitle)
 	cout << endl;
 	cout << "-- " << subtitle << " --" << endl;
 	cout << endl;
+}
+
+static void print_invoice_ui(Invoice* invoice)
+{
+	string is_paid = invoice->is_paid() ? "Si" : "No";
+	std::cout << std::string(50, '-') << std::endl;
+	cout << "FACTURA #" << invoice->invoice_number << endl;
+	cout << "CLIENTE: " << invoice->person->get_full_name() << endl;
+	cout << "NIT: " << invoice->person->nit << endl;
+	cout << "CIUDAD: " << invoice->person->address << endl;
+	cout << "TELEFONO: " << invoice->person->phone << endl;
+	cout << "EDAD: " << invoice->person->age << endl;
+	cout << endl;
+	cout << "PRODUCTOS" << endl;
+	cout << endl;
+	// Encabezados de la tabla
+	std::cout << std::left << std::setw(20) << "Nombre"
+		<< std::right << std::setw(10) << "Precio"
+		<< std::setw(10) << "Cantidad"
+		<< std::setw(10) << "Total" << std::endl;
+	std::cout << std::string(50, '-') << std::endl;
+
+	for (auto& product : invoice->products)
+	{
+		std::cout << std::left << std::setw(20) << product->name
+			<< std::right << std::setw(10) << std::fixed << std::setprecision(2) << product->price
+			<< std::setw(10) << product->quantity
+			<< std::setw(10) << product->total() << std::endl;
+	}
+	cout << endl;
+	std::cout << std::left << std::setw(40) << "TOTAL: " << invoice->get_products_total() << std::endl;
+	std::cout << std::left << std::setw(40) << "SALDO PENDIENTE: " << invoice->remaining_to_pay() << std::endl;
+	std::cout << std::left << std::setw(40) << "ANULADA: " << (invoice->is_active ? "No" : "Si") << std::endl;
+	std::cout << std::left << std::setw(40) << "SOLVENTE: " << is_paid << std::endl;
+	std::cout << std::endl;
 }
 
 int main()
@@ -45,8 +83,8 @@ int main()
 		cout << "----------------------------------------" << endl;
 		cout << "1. Crear factura" << endl;
 		cout << "2. Consultar factura" << endl;
-		cout << "3. Modificar factura" << endl;
-		cout << "4. Eliminar factura" << endl;
+		cout << "3. Hacer un pago" << endl;
+		cout << "4. Anular factura" << endl;
 		cout << "5. Salir" << endl;
 		cout << "----------------------------------------" << endl;
 		cout << "Seleccione una opcion: ";
@@ -114,17 +152,70 @@ int main()
 				cout << "Cliente: " << invoice->person->get_full_name() << endl;
 				cout << "NIT: " << invoice->person->nit << endl;
 				cout << "TOTAL: " << invoice->get_products_total() << endl;
+				cout << "Saldo pendiente: " << invoice->remaining_to_pay() << endl;
+				cout << "Anulada: " << (invoice->is_active ? "No" : "Si") << endl;
 				cout << "Solvente: " << is_paid << endl;
 				cout << endl;
 			}
+
+			double invoice_number;
+			cout << "Ingrese el numero de factura: ";
+			cin >> invoice_number;
+
+			Invoice* invoice = invoiceRepository->find_by_invoice_number(invoice_number);
+			if (invoice == nullptr)
+			{
+				cout << "Factura no encontrada" << endl;
+				break;
+			}
+			system("cls");
+			print_invoice_ui(invoice);
 			break;
 		}
 		case 3:
-			cout << "Modificar factura" << endl;
+		{
+			title("Realizar un pago");
+			cout << "Ingrese el numero de factura: ";
+			double invoice_number;
+			cin >> invoice_number;
+			Invoice* invoice = invoiceRepository->find_by_invoice_number(invoice_number);
+			if (invoice == nullptr)
+			{
+				cout << "Factura no encontrada" << endl;
+				break;
+			}
+
+			cout << "Cliente: " << invoice->person->get_full_name() << endl;
+			cout << "Monto total: " << invoice->get_products_total() << endl;
+			cout << "Saldo pendiente: " << invoice->remaining_to_pay() << endl;
+			cout << "Ingrese el monto a pagar: ";
+			double amount;
+			cin >> amount;
+
+			invoice->pay(amount);
+
+			invoiceRepository->update_invoice(invoice);
+			delete invoice;
+			cout << "Pago realizado con exito" << endl;
 			break;
+		}
 		case 4:
-			cout << "Eliminar factura" << endl;
-			break;
+		{
+			title("Anular factura");
+			cout << "Ingrese el numero de factura: ";
+			double invoice_number;
+			cin >> invoice_number;
+			Invoice* invoice = invoiceRepository->find_by_invoice_number(invoice_number);
+			if (invoice == nullptr)
+			{
+				cout << "Factura no encontrada" << endl;
+				break;
+			}
+			invoice->is_active = false;
+			invoiceRepository->update_invoice(invoice);
+			delete invoice;
+			cout << "Factura anulada con exito" << endl;
+		}
 		case 5:
 			cout << "Saliendo..." << endl;
 			break;
