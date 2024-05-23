@@ -11,7 +11,7 @@ public:
 	string nit;
 	string address;
 	string phone;
-	int age = 0;
+	int age = 18;
 
 	Person() {};
 	Person(Row row) {

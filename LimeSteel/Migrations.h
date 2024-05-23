@@ -16,9 +16,9 @@ public:
 			this->directory->create_directory();
 		}
 
-		this->directory->create_file(PEOPLE_TABLE);
-		this->directory->create_file(INVOICES_TABLE);
-		this->directory->create_file(PRODUCTS_TABLE);
+		if (!this->directory->exists_file(PEOPLE_TABLE)) this->directory->create_file(PEOPLE_TABLE);
+		if (!this->directory->exists_file(INVOICES_TABLE)) this->directory->create_file(INVOICES_TABLE);
+		if (!this->directory->exists_file(PRODUCTS_TABLE)) this->directory->create_file(PRODUCTS_TABLE);
 	}
 
 	void Down() {

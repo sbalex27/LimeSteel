@@ -315,6 +315,15 @@ namespace UnitTest
 			Assert::IsTrue(exists);
 		}
 
+		TEST_METHOD(FirstInvoiceNumber)
+		{
+			// Act
+			auto next = this->repository->next_invoice_number();
+
+			// Assert
+			Assert::AreEqual(1, next);
+		}
+
 		TEST_METHOD(NextInvoiceNumber)
 		{
 			// Arrange
