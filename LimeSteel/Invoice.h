@@ -27,6 +27,10 @@ public:
 		this->quantity = quantity;
 	}
 
+	double total() const {
+		return price * quantity;
+	}
+
 	Row to_row() {
 		Row row;
 		if (has_guid()) {
@@ -73,17 +77,17 @@ public:
 	double get_products_total() const {
 		double total = 0.0;
 		for (auto product : products) {
-			total += product->price * product->quantity;
+			total += product->total();
 		}
 		return total;
 	}
 
-	bool remaining_to_pay() const {
+	double remaining_to_pay() const {
 		return get_products_total() - amount_paid;
 	}
 
 	bool is_paid() const {
-		return get_products_total() >= amount_paid;
+		return amount_paid >= get_products_total();
 	}
 
 	bool is_not_paid() const {

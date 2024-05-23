@@ -137,11 +137,13 @@ namespace UnitTest
 		TEST_METHOD(SeedBeforeUpdate)
 		{
 			// Arrange
-			auto seed = this->seeder->get_random_table(20, 4);
+			auto seed = this->seeder->get_random_table(20, 6);
 			auto seeded = this->csv->insert(PEOPLE_TABLE, seed);
 			auto original = new Person();
 			original->name = "John";
 			original->lastname = "Doe";
+			original->nit = "CF";
+			original->address = "Ciudad";
 			original->phone = "123456789";
 			original->age = 30;
 			auto guid = table->insert(original);
@@ -149,6 +151,8 @@ namespace UnitTest
 			// Act
 			original->name = "Any";
 			original->lastname = "Escobedo";
+			original->nit = "104903805";
+			original->address = "City";
 			original->phone = "55667788";
 			original->age = 50;
 			table->update(original);
@@ -157,6 +161,8 @@ namespace UnitTest
 			auto actual = table->find(guid);
 			Assert::AreEqual(original->name, actual.name);
 			Assert::AreEqual(original->lastname, actual.lastname);
+			Assert::AreEqual(original->nit, actual.nit);
+			Assert::AreEqual(original->address, actual.address);
 			Assert::AreEqual(original->phone, actual.phone);
 			Assert::AreEqual(original->age, actual.age);
 		}

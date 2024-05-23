@@ -65,4 +65,20 @@ public:
 
 		return invoices;
 	}
+
+	int next_invoice_number() {
+		auto invoices = all();
+		int max = 0;
+		for (auto invoice : invoices) {
+			if (invoice->invoice_number > max) {
+				max = invoice->invoice_number;
+			}
+		}
+		return max + 1;
+	}
+
+	void update_invoice(Invoice* invoice)
+	{
+		csv->update(INVOICES_TABLE, invoice->guid, invoice->to_row());
+	}
 };

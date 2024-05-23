@@ -314,5 +314,157 @@ namespace UnitTest
 			auto exists = this->csv->exists(PEOPLE_TABLE, person->guid);
 			Assert::IsTrue(exists);
 		}
+
+		TEST_METHOD(NextInvoiceNumber)
+		{
+			// Arrange
+			Person* person = new Person();
+			person->name = "Sergio";
+			person->lastname = "Batres";
+			person->nit = "CF";
+			person->address = "Ciudad";
+			person->phone = "41925033";
+			person->age = 24;
+			Invoice* invoice_1 = new Invoice();
+			invoice_1->person = person;
+			invoice_1->invoice_number = 1;
+			invoice_1->description = "Test invoice";
+			invoice_1->amount_paid = 0;
+			Invoice* invoice_2 = new Invoice();
+			invoice_2->person = person;
+			invoice_2->invoice_number = 2;
+			invoice_2->description = "Test invoice";
+			invoice_2->amount_paid = 0;
+			this->repository->insert(invoice_1);
+			this->repository->insert(invoice_2);
+
+			// Act
+			auto next = this->repository->next_invoice_number();
+
+			// Assert
+			Assert::AreEqual(3, next);
+		}
+
+		TEST_METHOD(GetterGetProductsTotal)
+		{
+			// Arrange
+			Invoice* invoice = new Invoice();
+			Product* product1 = new Product();
+			product1->price = 1;
+			product1->quantity = 10;
+			Product* product2 = new Product();
+			product2->price = 20;
+			product2->quantity = 2;
+			invoice->products.push_back(product1);
+			invoice->products.push_back(product2);
+
+			// Act
+			auto total = invoice->get_products_total();
+
+			// Assert
+			Assert::AreEqual(50.0, total);
+		}
+
+		TEST_METHOD(GetterRemainingToPay)
+		{
+			// Arrange
+			Invoice* invoice = new Invoice();
+			invoice->amount_paid = 30;
+			Product* product1 = new Product();
+			product1->price = 1;
+			product1->quantity = 10;
+			Product* product2 = new Product();
+			product2->price = 20;
+			product2->quantity = 2;
+			invoice->products.push_back(product1);
+			invoice->products.push_back(product2);
+
+			// Act
+			auto remaining = invoice->remaining_to_pay();
+
+			// Assert
+			Assert::AreEqual(20.0, remaining);
+		}
+
+		TEST_METHOD(GetterIsNotPaid)
+		{
+			// Arrange
+			Invoice* invoice = new Invoice();
+			invoice->amount_paid = 45;
+			Product* product1 = new Product();
+			product1->price = 1;
+			product1->quantity = 10;
+			Product* product2 = new Product();
+			product2->price = 20;
+			product2->quantity = 2;
+			invoice->products.push_back(product1);
+			invoice->products.push_back(product2);
+
+			// Act
+			auto is_not_paid = invoice->is_not_paid();
+
+			// Assert
+			Assert::IsTrue(is_not_paid);
+		}
+
+		TEST_METHOD(GetterIsPaid)
+		{
+			// Arrange
+			Invoice* invoice = new Invoice();
+			invoice->amount_paid = 50;
+			Product* product1 = new Product();
+			product1->price = 1;
+			product1->quantity = 10;
+			Product* product2 = new Product();
+			product2->price = 20;
+			product2->quantity = 2;
+			invoice->products.push_back(product1);
+			invoice->products.push_back(product2);
+
+			// Act
+			auto is_paid = invoice->is_paid();
+
+			// Assert
+			Assert::IsTrue(is_paid);
+		}
+
+		TEST_METHOD(AddPaymentAndUpdate)
+		{
+			// Arrange
+			Person* person = new Person();
+			person->name = "Sergio";
+			person->lastname = "Batres";
+			person->nit = "CF";
+			person->address = "Ciudad";
+			person->phone = "41925033";
+			person->age = 24;
+			Invoice* invoice = new Invoice();
+			invoice->person = person;
+			invoice->invoice_number = 1;
+			invoice->description = "Test invoice";
+			invoice->amount_paid = 0;
+			Product* product1 = new Product();
+			product1->name = "Product 1";
+			product1->price = 10;
+			product1->quantity = 10;
+			Product* product2 = new Product();
+			product2->name = "Product 2";
+			product2->price = 10;
+			product2->quantity = 10;
+			invoice->products.push_back(product1);
+			invoice->products.push_back(product2);
+			this->repository->insert(invoice);
+
+			// Act
+			auto invoices = this->repository->all();
+			auto first = invoices.front();
+			first->pay(100.0);
+			this->repository->update_invoice(first);
+
+			// Assert
+			auto updated = this->repository->all();
+			auto first_updated = updated.front();
+			Assert::AreEqual(100.0, first_updated->amount_paid);
+		}
 	};
 }
